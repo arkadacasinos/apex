@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     description: 'Лучшее казино онлайн с премиум играми и бонусами',
   },
   verification: {
-    yandex: 'acb9e2d7870a8f31',
+    yandex: '369a5ace8b9269e6',
   },
   icons: {
     icon: '/favicon.png',
